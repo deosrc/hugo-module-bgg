@@ -1,0 +1,27 @@
+{{ $context := . }}
+{{ $collection_data := partial "get-bgg-collection.html" . }}
+
+{{ range $collection_data }}
+  {{ $content := dict
+    "mediaType" "text/markdown"
+    "value" ""
+  }}
+  {{ $params := dict
+    "gameInfo" (dict
+      "bggId" .id
+      "collectInfoFromBgg" true
+    )
+  }}
+  {{ $path := urlize .title }}
+  {{ $page := dict
+    "content" $content
+    "kind" "page"
+    "path" $path
+    "title" .title
+    "dates" (dict
+      "lastmod" .lastmodified
+    )
+    "params" $params
+  }}
+  {{ $context.AddPage $page }}
+{{ end }}

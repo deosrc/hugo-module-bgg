@@ -1,0 +1,40 @@
+{{ $bgg_username := .Site.Params.bggUsername }}
+{{ $url := fmt.Print .Site.Params.bggData.baseUrl "/xmlapi2/collection?username=" $bgg_username }}
+{{ $data := slice }}
+
+{{ with try (resources.GetRemote $url) }}
+  {{ with .Err }}
+    {{ errorf "Error retrieving collection for BGG Username %s: $%s" $bgg_username . }}
+  {{ else with .Value }}
+    {{ with .Content }}
+      {{ $content := . }}
+      {{ with try (unmarshal .)}}
+        {{ with .Err }}
+          {{ errorf "Error parsing collection data for BGG Username %s: %s" $bgg_username . }}
+          {{ errorf "Content: %s" $content }}
+        {{ else with .Value }}
+          {{ with .item }}
+            {{ range . }}
+              {{ $game := dict
+                "id" (index . "-objectid")
+                "title" (index .name "#text")
+                "lastmodified" ((index .status "-lastmodified") | time.AsTime)
+              }}
+              {{ $data = $data | append $game }}
+            {{ end }}
+            {{ return $data }}
+          {{ else }}
+            {{ errorf "Error parsing collection data for BGG Username %s: Missing expected 'item' property." $bgg_username }}
+            {{ errorf "Content: %s" . }}
+          {{ end }}
+        {{ else }}
+          {{ errorf "Error parsing collection data for BGG Username %s: Unknown error." $bgg_username }}
+        {{ end }}
+      {{ end }}
+    {{ else }}
+      {{ errorf "Error retrieving collection for BGG Username %s: No content." $bgg_username }}
+    {{ end }}
+  {{ else }}
+    {{ errorf "Error retrieving collection for BGG Username %s: Unable to get remote resource %q" $bgg_username $url }}
+  {{ end }}
+{{ end }}
