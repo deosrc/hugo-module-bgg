@@ -3,55 +3,7 @@
 {{ end }}
 
 {{ define "main" }}
-  {{ $maxPlayers := 1 }}
-  {{ range .Pages }}
-    {{ $gameInfo := partial "get-game-info.html" . }}
-    {{ $gameMaxPlayers := $gameInfo.players.max }}
-    {{ $maxPlayers = (math.Max $maxPlayers $gameMaxPlayers) | int }}
-  {{ end }}
-
-  <div class="accordion mb-3" id="filtersAccordion">
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#filters" aria-expanded="false" aria-controls="filters">
-          <i class="bi bi-filter me-2"></i> Filters <span id="filterBadge" class="ms-2 badge text-bg-secondary">0</span>
-        </button>
-      </h2>
-      <div id="filters" class="accordion-collapse collapse show" data-bs-parent="#filtersAccordion">
-        <div class="accordion-body row row-cols-1 row-cols-sm-2 row-cols-lg-4">
-          <div class="col">
-            <div class="form-floating mb-4">
-              <input id="players" class="form-control" type="number" min="1" max="{{ $maxPlayers }}" placeholder="Number of Players" />
-              <label for="players">Number of Players</label>
-            </div>
-          </div>
-          <div class="col">
-            <div class="form-floating mb-3">
-              <select id="playtime" class="form-select">
-                <option value="" selected>-</option>
-                <option value="quick">Quick (&lt;30 Mins)</option>
-                <option value="medium">Medium (30-60 Mins)</option>
-                <option value="long">Long (60+ Mins)</option>
-              </select>
-              <label for="playtime">Play Time</label>
-            </div>
-          </div>
-          <div class="col">
-            <div class="form-floating mb-3">
-              <input id="age" class="form-control" type="number" min="1" placeholder="Minimum Age" />
-              <label for="age">Minimum Age</label>
-            </div>
-          </div>
-          <div class="col">
-            <div class="form-floating mb-3">
-              <input id="title-filter" class="form-control" type="search" placeholder="Title" />
-              <label for="title-filter">Title</label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  {{ .Render "list-filters" }}
 
   <ul class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 list-unstyled">
   {{ range sort .Pages "Title" }}
