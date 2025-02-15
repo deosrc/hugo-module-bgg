@@ -1,5 +1,5 @@
-{{ $bgg_username := .Site.Params.bggUsername }}
-{{ $url := fmt.Print .Site.Params.bggData.baseUrl "/xmlapi2/collection?username=" $bgg_username }}
+{{ $bgg_username := .Site.Params.bggCollectionModule.bggUsername }}
+{{ $url := fmt.Print .Site.Params.bggCollectionModule.baseUrl "/xmlapi2/collection?username=" $bgg_username }}
 {{ $data := slice }}
 
 {{ with try (resources.GetRemote $url) }}

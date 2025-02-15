@@ -2,7 +2,7 @@
 
 {{ if default false $gameInfo.collectInfoFromBgg }}
   {{ with $gameInfo.bggId }}
-    {{ $url := fmt.Print $.Site.Params.bggData.baseUrl "/xmlapi2/thing?videos=1&id=" . }}
+    {{ $url := fmt.Print $.Site.Params.bggCollectionModule.baseUrl "/xmlapi2/thing?videos=1&id=" . }}
     {{ with try (resources.GetRemote $url )}}
       {{ with .Err }}
         {{ errorf "Error retrieving BGG data for '%s' (bggId: %i): %s" $.Title $gameInfo.bggId . }}

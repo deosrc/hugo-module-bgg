@@ -2,7 +2,7 @@
 
 {{ with $gameInfo.image }}
   {{ with resources.GetRemote . }}
-    {{ with .Filter (images.Process "fit 400x400")}}
+    {{ with .Filter (images.Process (fmt.Print "fit " $.Site.Params.bggCollectionModule.thumbnailMaxSize)) }}
       <div class="game-thumbnail-container" style="background-color: {{ (index .Colors 0).ColorHex }};">
         <img src="{{ .RelPermalink }}" class="game-thumbnail" alt="{{ $.Title }}" loading="lazy">
       </div>
