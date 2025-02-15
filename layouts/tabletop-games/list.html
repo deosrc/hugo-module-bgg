@@ -5,14 +5,7 @@
 {{ define "main" }}
   {{ .Render "list-filters" }}
 
-  <ul class="game-list">
-  {{ range .Pages.ByTitle }}
-    {{ $gameInfo := partial "get-game-info.html" . }}
-    <li class="game-list-item" data-title="{{ .Title }}"  data-players-min="{{ $gameInfo.players.min }}" data-players-max="{{ $gameInfo.players.max }}" data-playtime-min="{{ $gameInfo.playTimeMins.min }}" data-playtime-max="{{ $gameInfo.playTimeMins.max }}" data-minage="{{ $gameInfo.minAge }}">
-      <a href="{{ .RelPermalink }}">
-        {{ .Render "summary" }}
-      </a>
-    </li>
+  {{ with .Pages.ByTitle }}
+    {{ partial "tabletop-game-list" . }}
   {{ end }}
-  </ul>
 {{ end }}
