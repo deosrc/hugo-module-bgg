@@ -1,46 +1,48 @@
 {{ $gameInfo := partial "get-game-info" . }}
 
 {{ with $gameInfo }}
-  <div class="game-card card text-center">
+  <div class="game-summary">
     {{ $.Render "thumbnail" }}
-    <h5 class="game-title">{{ $.Title }}</h5>
-    <ul class="play-reference list-group list-group-horizontal">
-      {{ with .players }}
-        <li class="list-group-item players" title="Players">
-          <i class="bi bi-people-fill"></i>
-          <span class="label d-none">Players</span>
-          {{ if eq .min .max }}
-            <span class="value">{{ .min }}</span>
-          {{ else }}
-            <span class="value">{{ .min }}-{{ .max }}</span>
-          {{ end }}
-        </li>
-      {{ else }}
-        {{ warnf "Missing player info for %s" $.Title }}
-      {{ end }}
-      {{ with .playTimeMins }}
-        <li class="list-group-item playtime" title="Play Time">
-          <i class="bi bi-stopwatch-fill"></i>
-          <span class="label d-none">Play Time: </span>
-          {{ if eq .min .max }}
-            <span class="value">{{ .min }} mins</span>
-          {{ else }}
-            <span class="value">{{ .min }}-{{ .max }} mins</span>
-          {{ end }}
-        </li>
-      {{ else }}
-        {{ warnf "Missing play time info for %s" $.Title }}
-      {{ end }}
-      {{ with .minAge }}
-        <li class="list-group-item age" title="Age">
-          <i class="bi bi-balloon-fill"></i>
-          <span class="label d-none">Age: </span>
-          <span class="value">{{ . }}+</span>
-        </li>
-      {{ else }}
-        {{ warnf "Missing minimum age info for %s" .Title }}
-      {{ end }}
-    </ul>
+    <h5 class="game-summary-title">{{ $.Title }}</h5>
+    <div class="game-play-ref">
+      <div class="game-players">
+        {{ with .players }}
+          <span class="play-ref-label">Players</span>
+          <span class="play-ref-value">
+            {{ if eq .min .max }}
+              {{ .min }}
+            {{ else }}
+              {{ .min }}-{{ .max }}
+            {{ end }}
+          </span>
+        {{ else }}
+          {{ warnf "Missing player info for %s" $.Title }}
+        {{ end }}
+      </div>
+      <div class="game-play-time">
+        {{ with .playTimeMins }}
+          <span class="play-ref-label">Play Time</span>
+          <span class="play-ref-value">
+            {{ if eq .min .max }}
+              {{ .min }}
+            {{ else }}
+              {{ .min }}-{{ .max }}
+            {{ end }}
+          </span>
+          <span class="play-ref-units">mins</span>
+        {{ else }}
+          {{ warnf "Missing play time info for %s" $.Title }}
+        {{ end }}
+      </div>
+      <div class="game-min-age">
+        {{ with .minAge }}
+          <span class="play-ref-label">Minimum Age</span>
+          <span class="play-ref-value">{{ . }}</span>
+        {{ else }}
+          {{ warnf "Missing minimum age info for %s" $.Title }}
+        {{ end }}
+      </div>
+    </div>
   </div>
 {{ else }}
   {{ errorf "Missing game info for %s" .Title }}

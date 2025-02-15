@@ -3,8 +3,8 @@
 {{ with $gameInfo.image }}
   {{ with resources.GetRemote . }}
     {{ with .Filter (images.Process "fit 400x400")}}
-      <div class="game-image-container" style="background-color: {{ (index .Colors 0).ColorHex }};">
-        <img src="{{ .RelPermalink }}" class="game-image" alt="{{ $.Title }}" loading="lazy">
+      <div class="game-thumbnail-container" style="background-color: {{ (index .Colors 0).ColorHex }};">
+        <img src="{{ .RelPermalink }}" class="game-thumbnail" alt="{{ $.Title }}" loading="lazy">
       </div>
     {{ end }}
   {{ end }}
