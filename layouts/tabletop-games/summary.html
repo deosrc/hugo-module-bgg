@@ -2,17 +2,7 @@
 
 <div class="game-card card text-center">
   {{ with $gameInfo }}
-    {{ with .image }}
-      {{ with resources.GetRemote . }}
-        {{ with .Filter (images.Process "fit 400x400")}}
-          <div class="game-image-container" style="background-color: {{ (index .Colors 0).ColorHex }};">
-            <img src="{{ .RelPermalink }}" class="game-image" alt="{{ $.Title }}" loading="lazy">
-          </div>
-        {{ end }}
-      {{ end }}
-    {{ else }}
-      {{ warnf "Missing game image for %s" $.Title }}
-    {{ end }}
+    {{ $.Render "thumbnail" }}
     <h5 class="game-title">{{ $.Title }}</h5>
     <ul class="play-reference list-group list-group-horizontal">
       {{ with .players }}
