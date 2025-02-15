@@ -40,7 +40,7 @@
     filterCounter.dataset.value = filter.count;
 
     // Filter games list
-    const allGames = Array.from(document.getElementsByClassName('game'));
+    const allGames = Array.from(document.getElementsByClassName('game-list-item'));
     allGames.forEach(e => {
       const gamePlayersMin = Number(e.dataset.playersMin);
       const gamePlayersMax = Number(e.dataset.playersMax);
