@@ -1,12 +1,12 @@
 {{ $gameInfo := partial "get-game-info" . }}
 
-<div class="game-card card text-center">
-  {{ with $gameInfo }}
+{{ with $gameInfo }}
+  <div class="game-card card text-center">
     {{ $.Render "thumbnail" }}
     <h5 class="game-title">{{ $.Title }}</h5>
     <ul class="play-reference list-group list-group-horizontal">
       {{ with .players }}
-        <li class="list-group-item players" title="Players" data-players-min="{{ .min }}" data-players-max="{{ .max }}">
+        <li class="list-group-item players" title="Players">
           <i class="bi bi-people-fill"></i>
           <span class="label d-none">Players</span>
           {{ if eq .min .max }}
@@ -19,7 +19,7 @@
         {{ warnf "Missing player info for %s" $.Title }}
       {{ end }}
       {{ with .playTimeMins }}
-        <li class="list-group-item playtime" title="Play Time" data-playtime-min="{{ .min }}" data-playtime-max="{{ .max }}">
+        <li class="list-group-item playtime" title="Play Time">
           <i class="bi bi-stopwatch-fill"></i>
           <span class="label d-none">Play Time: </span>
           {{ if eq .min .max }}
@@ -32,7 +32,7 @@
         {{ warnf "Missing play time info for %s" $.Title }}
       {{ end }}
       {{ with .minAge }}
-        <li class="list-group-item age" title="Age" data-minage="{{ . }}">
+        <li class="list-group-item age" title="Age">
           <i class="bi bi-balloon-fill"></i>
           <span class="label d-none">Age: </span>
           <span class="value">{{ . }}+</span>
@@ -41,7 +41,7 @@
         {{ warnf "Missing minimum age info for %s" .Title }}
       {{ end }}
     </ul>
-  {{ else }}
-    {{ errorf "Missing game info for %s" .Title }}
-  {{ end }}
-</div>
+  </div>
+{{ else }}
+  {{ errorf "Missing game info for %s" .Title }}
+{{ end }}

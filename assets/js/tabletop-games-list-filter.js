@@ -42,11 +42,11 @@
     // Filter games list
     const allGames = Array.from(document.getElementsByClassName('game'));
     allGames.forEach(e => {
-      const gamePlayersMin = Number(e.querySelector('.players').dataset.playersMin);
-      const gamePlayersMax = Number(e.querySelector('.players').dataset.playersMax);
-      const gamePlayTimeMin = Number(e.querySelector('.playtime').dataset.playtimeMin);
-      const gamePlayTimeMax = Number(e.querySelector('.playtime').dataset.playtimeMax);
-      const gameMinAge = Number(e.querySelector('.age').dataset.minage);
+      const gamePlayersMin = Number(e.dataset.playersMin);
+      const gamePlayersMax = Number(e.dataset.playersMax);
+      const gamePlayTimeMin = Number(e.dataset.playtimeMin);
+      const gamePlayTimeMax = Number(e.dataset.playtimeMax);
+      const gameMinAge = Number(e.dataset.minage);
       const gameTitleLowerCase = e.dataset.title.toLowerCase();
 
       if (filter.values.playerCount && (filter.values.playerCount < gamePlayersMin || filter.values.playerCount > gamePlayersMax)) {

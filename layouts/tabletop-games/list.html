@@ -6,8 +6,9 @@
   {{ .Render "list-filters" }}
 
   <ul class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 list-unstyled">
-  {{ range sort .Pages "Title" }}
-    <li class="game col mb-3" data-title="{{ .Title }}">
+  {{ range .Pages.ByTitle }}
+    {{ $gameInfo := partial "get-game-info.html" . }}
+    <li class="game col mb-3" data-title="{{ .Title }}"  data-players-min="{{ $gameInfo.players.min }}" data-players-max="{{ $gameInfo.players.max }}" data-playtime-min="{{ $gameInfo.playTimeMins.min }}" data-playtime-max="{{ $gameInfo.playTimeMins.max }}" data-minage="{{ $gameInfo.minAge }}">
       <a class="game-card-link" href="{{ .RelPermalink }}">
         {{ .Render "summary" }}
       </a>
