@@ -1,0 +1,57 @@
+{{ $gameInfo := partial "get-game-info" . }}
+
+<div class="game-card card text-center">
+  {{ with $gameInfo }}
+    {{ with .image }}
+      {{ with resources.GetRemote . }}
+        {{ with .Filter (images.Process "fit 400x400")}}
+          <div class="game-image-container" style="background-color: {{ (index .Colors 0).ColorHex }};">
+            <img src="{{ .RelPermalink }}" class="game-image" alt="{{ $.Title }}" loading="lazy">
+          </div>
+        {{ end }}
+      {{ end }}
+    {{ else }}
+      {{ warnf "Missing game image for %s" $.Title }}
+    {{ end }}
+    <h5 class="game-title">{{ $.Title }}</h5>
+    <ul class="play-reference list-group list-group-horizontal">
+      {{ with .players }}
+        <li class="list-group-item players" title="Players" data-players-min="{{ .min }}" data-players-max="{{ .max }}">
+          <i class="bi bi-people-fill"></i>
+          <span class="label d-none">Players</span>
+          {{ if eq .min .max }}
+            <span class="value">{{ .min }}</span>
+          {{ else }}
+            <span class="value">{{ .min }}-{{ .max }}</span>
+          {{ end }}
+        </li>
+      {{ else }}
+        {{ warnf "Missing player info for %s" $.Title }}
+      {{ end }}
+      {{ with .playTimeMins }}
+        <li class="list-group-item playtime" title="Play Time" data-playtime-min="{{ .min }}" data-playtime-max="{{ .max }}">
+          <i class="bi bi-stopwatch-fill"></i>
+          <span class="label d-none">Play Time: </span>
+          {{ if eq .min .max }}
+            <span class="value">{{ .min }} mins</span>
+          {{ else }}
+            <span class="value">{{ .min }}-{{ .max }} mins</span>
+          {{ end }}
+        </li>
+      {{ else }}
+        {{ warnf "Missing play time info for %s" $.Title }}
+      {{ end }}
+      {{ with .minAge }}
+        <li class="list-group-item age" title="Age" data-minage="{{ . }}">
+          <i class="bi bi-balloon-fill"></i>
+          <span class="label d-none">Age: </span>
+          <span class="value">{{ . }}+</span>
+        </li>
+      {{ else }}
+        {{ warnf "Missing minimum age info for %s" .Title }}
+      {{ end }}
+    </ul>
+  {{ else }}
+    {{ errorf "Missing game info for %s" .Title }}
+  {{ end }}
+</div>

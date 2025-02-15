@@ -1,0 +1,33 @@
+{{ define "main" }}
+  {{ $gameInfo := partial "get-game-info" . }}
+
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+    <div class="col order-sm-1">
+      {{ .Render "summary" }}
+      <div class="btn-group-vertical d-block mt-3" role="group">
+        {{ with $gameInfo.tutorialVideos }}
+          <div class="btn-group" role="group">
+            <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+              Tutorial Videos <span class="badge rounded-pill ms-1 text-bg-secondary">{{ len . }}</span>
+            </button>
+            <ul class="dropdown-menu">
+              {{- range . -}}
+                <li><a class="dropdown-item" href="{{ .url }}" target="_blank">{{ .label }}</a></li>
+              {{- end -}}
+            </ul>
+          </div>
+        {{- end -}}
+        {{ with $gameInfo.bggId }}
+        <a class="btn btn-outline-secondary" href="https://boardgamegeek.com/boardgame/{{ . }}" target="_blank">View on BGG</a>
+        {{ end }}
+      </div>
+    </div>
+    <div class="col col-md-8">
+      <h1 class="d-none d-sm-block">{{ .Title }}</h1>
+      {{ if .Draft }}<span class="mb-2 mt-2 mt-sm-0 badge text-bg-warning">Draft</span>{{ end }}
+      <div class="pt-3 pt-sm-0">{{ $gameInfo.description | safeHTML }}</div>
+      <div class="pt-3">{{ .Content }}</div>
+    </div>
+  </div>
+{{ end }}
+

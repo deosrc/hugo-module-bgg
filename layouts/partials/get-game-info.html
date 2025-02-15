@@ -1,0 +1,66 @@
+{{ $gameInfo := .Param "gameInfo" }}
+
+{{ if default false $gameInfo.collectInfoFromBgg }}
+  {{ with $gameInfo.bggId }}
+    {{ $url := fmt.Print $.Site.Params.bggData.baseUrl "/xmlapi2/thing?videos=1&id=" . }}
+    {{ with try (resources.GetRemote $url )}}
+      {{ with .Err }}
+        {{ errorf "Error retrieving BGG data for '%s' (bggId: %i): %s" $.Title $gameInfo.bggId . }}
+      {{ else with .Value }}
+        {{ with .Content }}
+          {{ $content := . }}
+          {{ with try (unmarshal .) }}
+            {{ with .Err }}
+              {{ errorf "Error parsing BGG data for '%s' (bggId: %i): %s" $.Title $gameInfo.bggId . }}
+              {{ errorf "Content: %s" $content }}
+            {{ else with .Value }}
+              {{ with .item }}
+                {{ $tutorialVideos := slice }}
+                {{ if $.Site.Params.bggData.includeTutorialVideos }}
+                  {{ with .videos.video }}
+                    {{ range (where (where . "-category" "instructional") "-language" $.Site.Params.bggData.language) }}
+                      {{ $video := dict
+                        "url" (index . "-link")
+                        "label" (index . "-title")
+                      }}
+                      {{ $tutorialVideos = append $video $tutorialVideos }}
+                    {{ end }}
+                  {{ end }}
+                {{ end }}
+
+                {{ $bggGameInfo := dict
+                  "description" .description
+                  "image" .image
+                  "players" (dict
+                    "min" (index .minplayers "-value")
+                    "max" (index .maxplayers "-value")
+                  )
+                  "playTimeMins" (dict
+                    "min" (index .minplaytime "-value")
+                    "max" (index .maxplaytime "-value")
+                  )
+                  "minAge" (index .minage "-value")
+                  "tutorialVideos" $tutorialVideos
+                }}
+                {{ $gameInfo = merge $bggGameInfo $gameInfo }}
+              {{ else }}
+                {{ errorf "Error parsing BGG data for '%s' (bggId: %i): Missing expected 'item' property." $.Title $gameInfo.bggId }}
+                {{ errorf "Content: %s" . }}
+              {{ end }}
+            {{ else }}
+              {{ errorf "Error parsing BGG data for '%s' (bggId: %i): Unknown error." $.Title $gameInfo.bggId }}
+            {{ end }}
+          {{ end }}
+        {{ else }}
+          {{ errorf "Error retrieving BGG data for '%s' (bggId: %i): No content." $.Title $gameInfo.bggId }}
+        {{ end }}
+      {{ else }}
+        {{ errorf "Error retrieving BGG data for '%s' (bggId: %i): Unable to get remote resource %q" $.Title $gameInfo.bggId $url }}
+      {{ end }}
+    {{ end }}
+  {{ else }}
+    {{ errorf "Error retrieving BGG data for '%s': Missing bggId." .Title }}
+  {{ end }}
+{{ end }}
+
+{{ return $gameInfo }}
