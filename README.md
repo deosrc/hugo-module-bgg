@@ -1,0 +1,1 @@
+# hugo-module-bgg-collection
