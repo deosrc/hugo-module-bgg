@@ -1,8 +1,9 @@
 {{ $gameInfo := .Param "gameInfo" }}
+{{ $moduleParams := .Site.Params.bgg }}
 
 {{ if default false $gameInfo.collectInfoFromBgg }}
   {{ with $gameInfo.bggId }}
-    {{ $url := fmt.Print $.Site.Params.bggCollectionModule.baseUrl "/xmlapi2/thing?videos=1&id=" . }}
+    {{ $url := fmt.Print $moduleParams.baseUrl "/xmlapi2/thing?videos=1&id=" . }}
     {{ with try (resources.GetRemote $url )}}
       {{ with .Err }}
         {{ errorf "Error retrieving BGG data for '%s' (bggId: %i): %s" $.Title $gameInfo.bggId . }}
@@ -16,9 +17,9 @@
             {{ else with .Value }}
               {{ with .item }}
                 {{ $tutorialVideos := slice }}
-                {{ if $.Site.Params.bggData.includeTutorialVideos }}
+                {{ if $moduleParams.includeTutorialVideos }}
                   {{ with .videos.video }}
-                    {{ range (where (where . "-category" "instructional") "-language" $.Site.Params.bggData.language) }}
+                    {{ range (where (where . "-category" "instructional") "-language" $moduleParams.language) }}
                       {{ $video := dict
                         "url" (index . "-link")
                         "label" (index . "-title")
