@@ -57,7 +57,7 @@ Want something extra which isn't covered above? Feel free to extend as you see f
 
 1. Build your site. Your games collection should be available in the `/tabletop-games/` section.
 
-    > :warning: Occasionally your site build may fail with an error indicating that Board Game Geek is preparing your collection. This is a quirk of the BGG API. Usually re-running the build will successfully build the site. This quirk of the API may also result in your collection data being out of date. Unfortunately, the only solution to this is to wait for the BGG cache to expire.
+    > :warning: Occasionally your site build may fail with an error indicating that Board Game Geek is preparing your collection. This is a quirk of the BGG API. Usually re-running the build will successfully build the site. See <https://boardgamegeek.com/thread/1188687/export-collections-has-been-updated-xmlapi-develop>.
 
 ### Enabling Game List Filtering
 
