@@ -1,6 +1,5 @@
 ---
-title: My Tabletop Games Collection
+title: Tabletop Games
 menus:
-  main:
-    name: Tabletop Games
+  - main
 ---
