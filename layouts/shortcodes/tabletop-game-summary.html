@@ -1,0 +1,6 @@
+{{ $page := .Get "page" }}
+{{ with .Site.GetPage $page }}
+  {{ partial "tabletop-game-summary-link" . }}
+{{ else }}
+  {{ warnf "Page %s not found" $page }}
+{{ end }}
