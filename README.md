@@ -1,8 +1,8 @@
 # Hugo Module: Board Game Geek Collection
 
-This is a [Hugo](https://gohugo.io) module to add pages for your tabletop games collection to your website.
+This is a [Hugo](https://gohugo.io) module to add pages for your tabletop games collection to your website. Details of your collection and the games are automatically collected from [Board Game Geek](https://boardgamegeek.com/) (BGG).
 
-Details of your collection and the games are automatically collected from [Board Game Geek](https://boardgamegeek.com/) (BGG).
+It was developed for my personal website to provide a more modern and mobile friendly user interface, with filtering capabilities based on attendees to gaming sessions.
 
 > :warning: **This is not a theme module!** It will only add basic pages to your site for you game collection. The components are split which should hopefully allow you to re-style them as needed. This will be covered in the [Overriding Components](#overridingstyling-components) section. The screenshots below are an example where the basic styling has been overridden to use [Bootstrap](https://getbootstrap.com).
 
@@ -61,15 +61,15 @@ Want something extra which isn't covered above? Feel free to extend as you see f
 
 Due to the variations in Hugo themes, the game list filters if shown will likely not be functional. The instructions for this will vary, so this section will instead aim to show you what is required so that you can add the correct override.
 
-1. Create a new layout override for the list page type. This will need to be placed at `/layouts/tabletop-games/list.html`. (This will be differnet if you have changed the section).
-1. Either in the new layout or globally for your site, ensure the script `assets/js/tabletop-games-list-filter.js` is being loaded or bundled into the page.
-1. For the content of the page, add the filter controls:
+1. Create a new layout override for the list page type. This will need to be placed at `/layouts/tabletop-games/list.html`.
+1. Either in the new layout or globally for your site, ensure the script `/assets/js/tabletop-games-list-filter.js` is being loaded or bundled into the page.
+1. For the content of the page, add the filter controls in the desired location:
 
     ```go
     {{ .Render "list-filters" }}
     ```
 
-1. Then add the game list:
+1. Then add the game list. **Make sure the data properties are present on the `.game-list-item` element!**
 
     ```go
     <ul class="game-list">
@@ -83,6 +83,8 @@ Due to the variations in Hugo themes, the game list filters if shown will likely
       {{ end }}
     </ul>
     ```
+
+1. Build and test your site.
 
 ## Customization
 
@@ -98,6 +100,7 @@ The main content views are as follows:
 
 - `single.html` - The page for individual games.
 - `list.html` - The game list page.
+- `list-filters.html` - The controls for the list filtering.
 - `summary.html` - A brief overview of the game. By default includes the title, thumbnail, players, play time and minimum age.
 
 Additionally, the following partials are available:
