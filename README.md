@@ -91,11 +91,15 @@ For most styling, the HTML of the various components will need adjusting to matc
 
 The easiest way to accomplish this, is to copy the relevant file from the `layouts` folder of this repository, then customize it as required.
 
-The main components are as folows:
+The main content views are as follows:
 
 - `single.html` - The page for individual games.
 - `list.html` - The game list page.
 - `summary.html` - A brief overview of the game. By default includes the title, thumbnail, players, play time and minimum age.
+
+Additionally, the following partials are available:
+
+- `tabletop-game-list.html` - Outputs the game summary for the provided pages. The context pass to the partial must be a Pages object.
 
 ### Adding Collection Games Manually
 
