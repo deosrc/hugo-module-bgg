@@ -4,7 +4,10 @@ This is a [Hugo](https://gohugo.io) module to add pages for your tabletop games 
 
 Details of your collection and the games are automatically collected from [Board Game Geek](https://boardgamegeek.com/) (BGG).
 
-> :warning: **This is not a theme module!** It will only add basic pages to your site for you game collection. The components are split which should hopefully allow you to re-style them as needed. This will be covered in the [Overriding Components](#overriding-components) section.
+> :warning: **This is not a theme module!** It will only add basic pages to your site for you game collection. The components are split which should hopefully allow you to re-style them as needed. This will be covered in the [Overriding Components](#overridingstyling-components) section. The screenshots below are an example where the basic styling has been overridden to use [Bootstrap](https://getbootstrap.com).
+
+![A bootstrap styled game list page](./game-list.png)
+![A bootstrap styled game page](./game-page.png)
 
 ## Features
 
