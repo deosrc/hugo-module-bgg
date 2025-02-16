@@ -120,3 +120,33 @@ gameInfo:
 The process for adding custom games is similar to [adding collection games manually](#adding-collection-games-manually), but specifies all of the game information in the front matter. The basic template for this should be provided when creating the markdown file using the command above.
 
 > :information: Unfortunately, due to limitations with Hugo content adapters, it is not possible to use the method to override the game information provided by Board Game Geek.
+
+## Other Usage Examples
+
+### Latest Games
+
+> :warning: The BGG API doesn't provided a "date added" property for collections, despite it being available on the website. As a result, the dates for game pages is set to the "last modified" property. This can result in a game appearing in this "Latest Games" example if you make any changes to it within your collection (e.g. by rating it).
+
+```go
+{{ $gamePages := where .Site.RegularPages "Type" "tabletop-games" }}
+{{ with $gamePages.ByDate.Reverse.Limit 4 }}
+  <h2 class="mb-4">Latest Games</h2>
+  {{ partial "tabletop-game-list.html" . }}
+{{ end }}
+```
+
+### Display a Summary
+
+This is available either as a shortcode or a partial:
+
+```go
+{{< tabletop-game-summary page="/tabletop-games/camel-up" >}}
+```
+
+```go
+{{ with .Site.GetPage "/tabletop-games/camel-up" }}
+  {{ partial "tabletop-game-summary-link" . }}
+{{ else }}
+  {{ warnf "Page %s not found" $page }}
+{{ end }}
+```
