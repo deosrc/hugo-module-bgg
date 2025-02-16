@@ -25,7 +25,7 @@ Want something extra which isn't covered above? Feel free to extend as you see f
 
 ## Quick Start
 
-> :info: This guide will assume a yaml configuration format. If using another format, you will need to convert.
+> :warning: This guide will assume a yaml configuration format. If using another format, you will need to convert.
 
 1. Ensure you have already set up a hugo site, configured to support hugo modules, and with your desired theme.
 1. Set up your game collection at [Board Game Geek](https://boardgamegeek.com/).
@@ -123,7 +123,7 @@ gameInfo:
 
 The process for adding custom games is similar to [adding collection games manually](#adding-collection-games-manually), but specifies all of the game information in the front matter. The basic template for this should be provided when creating the markdown file using the command above.
 
-> :information: Unfortunately, due to limitations with Hugo content adapters, it is not possible to use the method to override the game information provided by Board Game Geek.
+> :warning: Unfortunately, due to limitations with Hugo content adapters, it is not possible to use the method to override the game information provided by Board Game Geek.
 
 ## Other Usage Examples
 
