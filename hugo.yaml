@@ -1,0 +1,6 @@
+params:
+  bgg:
+    baseUrl: https://boardgamegeek.com
+    thumbnailMaxSize: 400x400
+    language: English
+    includeTutorialVideos: true

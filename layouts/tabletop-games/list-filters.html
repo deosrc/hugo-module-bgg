@@ -1,0 +1,32 @@
+{{ $maxPlayers := 1 }}
+{{ range .Pages }}
+  {{ $gameInfo := partial "get-game-info.html" . }}
+  {{ $gameMaxPlayers := $gameInfo.players.max }}
+  {{ $maxPlayers = (math.Max $maxPlayers $gameMaxPlayers) | int }}
+{{ end }}
+
+<details>
+  <summary>Filters <span id="filterCount" data-prefix="(" data-suffix=")"></span></summary>
+
+  <div class="players-filter">
+    <label for="players-filter-input">Number of Players</label>
+    <input id="players-filter-input" type="number" min="1" max="{{ $maxPlayers }}" step="1" />
+  </div>
+  <div class="play-time-filter">
+    <label for="play-time-filter-input">Play Time</label>
+    <select id="play-time-filter-input">
+      <option value="" selected>-</option>
+      <option value="quick">Quick (&lt;30 Mins)</option>
+      <option value="medium">Medium (30-60 Mins)</option>
+      <option value="long">Long (60+ Mins)</option>
+    </select>
+  </div>
+  <div class="min-age-filter">
+    <label for="min-age-filter-input">Minimum Age</label>
+    <input id="min-age-filter-input" type="number" min="1" max="21" step="1" />
+  </div>
+  <div class="title-filter">
+    <label for="title-filter-input">Title</label>
+    <input id="title-filter-input" type="text" />
+  </div>
+</details>

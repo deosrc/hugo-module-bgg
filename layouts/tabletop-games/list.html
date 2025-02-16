@@ -1,0 +1,11 @@
+{{ define "scripts" }}
+  {{ partial "script.html" "js/tabletop-games-list-filter.js" }}
+{{ end }}
+
+{{ define "main" }}
+  {{ .Render "list-filters" }}
+
+  {{ with .Pages.ByTitle }}
+    {{ partial "tabletop-game-list" . }}
+  {{ end }}
+{{ end }}

@@ -1,0 +1,8 @@
+<ul class="game-list">
+{{ range . }}
+  {{ $gameInfo := partial "get-game-info.html" . }}
+  <li class="game-list-item" data-title="{{ .Title }}"  data-players-min="{{ $gameInfo.players.min }}" data-players-max="{{ $gameInfo.players.max }}" data-playtime-min="{{ $gameInfo.playTimeMins.min }}" data-playtime-max="{{ $gameInfo.playTimeMins.max }}" data-minage="{{ $gameInfo.minAge }}">
+    {{ partial "tabletop-game-summary-link.html" . }}
+  </li>
+{{ end }}
+</ul>

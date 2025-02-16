@@ -1,0 +1,49 @@
+{{ $gameInfo := partial "get-game-info" . }}
+
+{{ with $gameInfo }}
+  <div class="game-summary">
+    {{ $.Render "thumbnail" }}
+    <h5 class="game-summary-title">{{ $.Title }}</h5>
+    <div class="game-play-ref">
+      <div class="game-players">
+        {{ with .players }}
+          <span class="play-ref-label">Players</span>
+          <span class="play-ref-value">
+            {{ if eq .min .max }}
+              {{ .min }}
+            {{ else }}
+              {{ .min }}-{{ .max }}
+            {{ end }}
+          </span>
+        {{ else }}
+          {{ warnf "Missing player info for %s" $.Title }}
+        {{ end }}
+      </div>
+      <div class="game-play-time">
+        {{ with .playTimeMins }}
+          <span class="play-ref-label">Play Time</span>
+          <span class="play-ref-value">
+            {{ if eq .min .max }}
+              {{ .min }}
+            {{ else }}
+              {{ .min }}-{{ .max }}
+            {{ end }}
+          </span>
+          <span class="play-ref-units">mins</span>
+        {{ else }}
+          {{ warnf "Missing play time info for %s" $.Title }}
+        {{ end }}
+      </div>
+      <div class="game-min-age">
+        {{ with .minAge }}
+          <span class="play-ref-label">Minimum Age</span>
+          <span class="play-ref-value">{{ . }}</span>
+        {{ else }}
+          {{ warnf "Missing minimum age info for %s" $.Title }}
+        {{ end }}
+      </div>
+    </div>
+  </div>
+{{ else }}
+  {{ errorf "Missing game info for %s" .Title }}
+{{ end }}
