@@ -97,14 +97,18 @@
   }
 
   window.addEventListener('DOMContentLoaded', () => {
-    // Register event listeners
-    getFilterControlPlayerCount().addEventListener('change', applyFilter);
-    getFilterControlPlayTime().addEventListener('change', applyFilter);
-    getFilterControlAge().addEventListener('change', applyFilter);
-    getFilterControlTitle().addEventListener('keyup', applyFilter);
-    console.log('Game filter event listeners registered.');
+    if (getFilterControlPlayerCount()) {
+      // Register event listeners
+      getFilterControlPlayerCount().addEventListener('change', applyFilter);
+      getFilterControlPlayTime().addEventListener('change', applyFilter);
+      getFilterControlAge().addEventListener('change', applyFilter);
+      getFilterControlTitle().addEventListener('keyup', applyFilter);
+      console.log('Game filter event listeners registered.');
 
-    // Run apply method for any pre-selected values as a result of page refresh
-    applyFilter();
+      // Run apply method for any pre-selected values as a result of page refresh
+      applyFilter();
+    } else {
+      console.log("Game filter controls not found. Probably not be a game list page.");
+    }
   })
 })()
