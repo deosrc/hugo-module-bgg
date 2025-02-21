@@ -88,8 +88,12 @@
 
   const setFilterCounter = (count) => {
     const filterCounter = getFilterCounter();
-    filterCounter.innerText = (filterCounter.dataset.prefix || "") + count + (filterCounter.dataset.suffix || "");
-    filterCounter.dataset.value = count;
+    if (filterCounter) {
+      filterCounter.innerText = (filterCounter.dataset.prefix || "") + count + (filterCounter.dataset.suffix || "");
+      filterCounter.dataset.value = count;
+    } else {
+      console.log("Filter counter element is not present.");
+    }
   }
 
   window.addEventListener('DOMContentLoaded', () => {
