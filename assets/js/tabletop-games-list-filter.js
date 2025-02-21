@@ -1,18 +1,18 @@
 (() => {
   'use strict'
 
-  const playerCountSelector = document.getElementById('players-filter-input');
-  const playTimeSelector = document.getElementById('play-time-filter-input');
-  const ageInput = document.getElementById('min-age-filter-input');
-  const titleInput = document.getElementById('title-filter-input');
+  const getFilterControlPlayerCount = () => document.getElementById('players-filter-input');
+  const getFilterControlPlayTime = () => document.getElementById('play-time-filter-input');
+  const getFilterControlAge = () => document.getElementById('min-age-filter-input');
+  const getFilterControlTitle = () => document.getElementById('title-filter-input');
 
-  const filterCounter = document.getElementById('filterCount');
+  const getFilterCounter = () => document.getElementById('filterCount');
 
   const getFilters = () => {
-    const playerCount = Number(playerCountSelector.value);
-    const playTime = playTimeSelector.value;
-    const minAge = Number(ageInput.value);
-    const title = titleInput.value.toLowerCase();
+    const playerCount = Number(getFilterControlPlayerCount().value);
+    const playTime = getFilterControlPlayTime().value;
+    const minAge = Number(getFilterControlAge().value);
+    const title = getFilterControlTitle().value.toLowerCase();
 
     let count = 0;
     if (playerCount) count++;
@@ -36,8 +36,7 @@
     console.log(`Applying filters: ${JSON.stringify(filter)}`);
 
     // Update filter badge
-    filterCounter.innerText = (filterCounter.dataset.prefix || "") + filter.count + (filterCounter.dataset.suffix || "");
-    filterCounter.dataset.value = filter.count;
+    setFilterCounter(filter.count);
 
     // Filter games list
     const allGames = Array.from(document.getElementsByClassName('game-list-item'));
@@ -87,12 +86,18 @@
     });
   }
 
+  const setFilterCounter = (count) => {
+    const filterCounter = getFilterCounter();
+    filterCounter.innerText = (filterCounter.dataset.prefix || "") + count + (filterCounter.dataset.suffix || "");
+    filterCounter.dataset.value = count;
+  }
+
   window.addEventListener('DOMContentLoaded', () => {
     // Register event listeners
-    playerCountSelector.addEventListener('change', applyFilter);
-    playTimeSelector.addEventListener('change', applyFilter);
-    ageInput.addEventListener('change', applyFilter);
-    titleInput.addEventListener('keyup', applyFilter);
+    getFilterControlPlayerCount().addEventListener('change', applyFilter);
+    getFilterControlPlayTime().addEventListener('change', applyFilter);
+    getFilterControlAge().addEventListener('change', applyFilter);
+    getFilterControlTitle().addEventListener('keyup', applyFilter);
     console.log('Game filter event listeners registered.');
 
     // Run apply method for any pre-selected values as a result of page refresh
