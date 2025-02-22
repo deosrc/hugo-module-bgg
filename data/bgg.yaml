@@ -1,0 +1,6 @@
+contentAdapter:
+  ignoreBggIds: []
+    # You can provide a list here of BGG IDs in your collection which the content adapter should ignore.
+    # This is useful for avoiding page collisions if you wish to define your own custom content for a game page.
+    # See https://gohugo.io/content-management/content-adapters/#page-collisions
+    # It is recommended to put the game title in a comment next to the ID.
