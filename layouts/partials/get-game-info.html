@@ -30,7 +30,7 @@
                 {{ end }}
 
                 {{ $bggGameInfo := dict
-                  "description" .description
+                  "description" (.description | htmlUnescape)
                   "image" .image
                   "players" (dict
                     "min" (index .minplayers "-value")
