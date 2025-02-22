@@ -25,7 +25,7 @@
     <div class="col col-md-8">
       <h1 class="d-none d-sm-block">{{ .Title }}</h1>
       {{ if .Draft }}<span class="mb-2 mt-2 mt-sm-0 badge text-bg-warning">Draft</span>{{ end }}
-      <div class="pt-3 pt-sm-0">{{ $gameInfo.description | safeHTML }}</div>
+      <div class="pt-3 pt-sm-0">{{ $gameInfo.description | markdownify }}</div>
       <div class="pt-3">{{ .Content }}</div>
     </div>
   </div>
