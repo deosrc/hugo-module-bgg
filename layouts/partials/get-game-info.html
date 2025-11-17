@@ -3,7 +3,7 @@
 
 {{ $auth_token := .Site.Params.bgg.authToken }}
 {{ if not $auth_token }}
-  {{ errorf "Error requesting BGG collection: No auth token provided" }}
+  {{ errorf "Error requesting BGG game info: No auth token provided" }}
 {{ end }}
 {{ $opts := dict
   "headers" (dict "Authorization" (fmt.Printf "Bearer %s" $auth_token))
