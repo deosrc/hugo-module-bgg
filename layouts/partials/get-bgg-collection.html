@@ -7,7 +7,7 @@
   {{ errorf "Error requesting BGG collection: No auth token provided" }}
 {{ end }}
 {{ $opts := dict
-  "headers" (dict "Authorization" $auth_token)
+  "headers" (dict "Authorization" (fmt.Printf "Bearer %s" $auth_token))
 }}
 
 {{ with try (resources.GetRemote $url $opts) }}
