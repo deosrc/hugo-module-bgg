@@ -2,7 +2,15 @@
 {{ $url := fmt.Print .Site.Params.bgg.baseUrl "/xmlapi2/collection?username=" $bgg_username }}
 {{ $data := slice }}
 
-{{ with try (resources.GetRemote $url) }}
+{{ $auth_token := .Site.Params.bgg.authToken }}
+{{ if not $auth_token }}
+  {{ errorf "Error requesting BGG collection: No auth token provided" }}
+{{ end }}
+{{ $opts := dict
+  "headers" (dict "Authorization" (fmt.Printf "Bearer %s" $auth_token))
+}}
+
+{{ with try (resources.GetRemote $url $opts) }}
   {{ with .Err }}
     {{ errorf "Error retrieving collection for BGG Username %s: $%s" $bgg_username . }}
   {{ else with .Value }}

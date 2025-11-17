@@ -1,10 +1,18 @@
 {{ $gameInfo := .Param "gameInfo" }}
 {{ $moduleParams := .Site.Params.bgg }}
 
+{{ $auth_token := .Site.Params.bgg.authToken }}
+{{ if not $auth_token }}
+  {{ errorf "Error requesting BGG game info: No auth token provided" }}
+{{ end }}
+{{ $opts := dict
+  "headers" (dict "Authorization" (fmt.Printf "Bearer %s" $auth_token))
+}}
+
 {{ if default false $gameInfo.collectInfoFromBgg }}
   {{ with $gameInfo.bggId }}
     {{ $url := fmt.Print $moduleParams.baseUrl "/xmlapi2/thing?videos=1&id=" . }}
-    {{ with try (resources.GetRemote $url )}}
+    {{ with try (resources.GetRemote $url $opts )}}
       {{ with .Err }}
         {{ errorf "Error retrieving BGG data for '%s' (bggId: %i): %s" $.Title $gameInfo.bggId . }}
       {{ else with .Value }}
