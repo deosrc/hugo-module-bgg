@@ -1,5 +1,5 @@
 {{ $context := . }}
-{{ $ignoredIds :=  .Site.Data.bgg.contentAdapter.ignoreBggIds }}
+{{ $ignoredIds :=  hugo.Data.bgg.contentAdapter.ignoreBggIds }}
 {{ $collection_data := partial "get-bgg-collection.html" . }}
 
 {{ range $collection_data }}
